@@ -1,5 +1,5 @@
 -- load library
-local StreeHub = loadstring(game:HttpGet("https://raw.githubusercontent.com/create-stree/STREE-HUB/main/UI.Libry"))()
+local StreeHub = loadstring(game:HttpGet("https://raw.githubusercontent.com/create-stree/UI.Library/refs/heads/main/Example.txt"))()
 
 -- Create window
 local Window = StreeHub:CreateWindow({
