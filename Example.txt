@@ -2012,7 +2012,7 @@ function StreeHub:GetIcon(iconName)
 end
 
 function StreeHub:GetAvailableIcons()
-    return libraryInstance:GetAvailableIcons()
+    return libraryInstance:GetAvailableIcons(icons)
 end
 
 function StreeHub:CreateIconPreview()
