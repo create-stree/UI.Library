@@ -1884,9 +1884,16 @@ local MainModule = function()
     -- Get all available icons
     function Library:GetAvailableIcons()
         local icons = {}
+    
+        if not self.Icons or type(self.Icons) ~= "table" then
+            warn("[Stree Hub] Icons table is not initialized or invalid")
+            return icons
+        end
+    
         for iconName, _ in pairs(self.Icons) do
             table.insert(icons, iconName)
         end
+    
         table.sort(icons)
         return icons
     end
