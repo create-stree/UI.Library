@@ -1,4 +1,4 @@
-local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/create-stree/UI.Library/refs/heads/main/Source.lua"))()```
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/create-stree/UI.Library/refs/heads/main/Source.lua"))()
 
 local Window = Library:MakeGui({
     NameHub = "Stree Hub | UI Library",
