@@ -530,7 +530,7 @@ function StreeHub:Window(GuiConfig)
     DropShadowHolder.Parent = Triplesixxxx
 
     DropShadowHolder.Position = UDim2.new(0, (StreeHub.AbsoluteSize.X // 2 - DropShadowHolder.Size.X.Offset // 2), 0,
-        (Triplesixxxx.AbsoluteSize.Y // 2 - DropShadowHolder.Size.Y.Offset // 2))
+        (StreeHub.AbsoluteSize.Y // 2 - DropShadowHolder.Size.Y.Offset // 2))
     DropShadow.Image = "rbxassetid://6015897843"
     DropShadow.ImageColor3 = Color3.fromRGB(15, 15, 15)
     DropShadow.ImageTransparency = 1
