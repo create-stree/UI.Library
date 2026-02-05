@@ -465,8 +465,9 @@ function StreeHub:MakeNotify(NotifyConfig)
     return NotifyFunction
 end
 
-function StreeHub(msg, delay, color, title, desc)
-    return StreeHub:MakeNotify({
+local StreeHub = {}
+function StreeHub:Notify(msg, delay, color, title, desc)
+    return self:MakeNotify({
         Title = title or "StreeHub",
         Description = desc or "Notification",
         Content = msg or "Content",
@@ -2641,7 +2642,6 @@ function StreeHub:Window(GuiConfig)
         return Sections
     end
 
-    -- Buat instance untuk WalvyCommunity Button
     local StreeHub = Instance.new("ScreenGui")
     local Button = Instance.new("ImageButton")
     local Corner = Instance.new("UICorner")
@@ -2665,10 +2665,8 @@ function StreeHub:Window(GuiConfig)
     Scale.Scale = 1
     Scale.Parent = Button
 
-    -- Variabel untuk melacak status window
     local isWindowOpen = true
 
-    -- Fungsi untuk menangani klik tombol
     Button.MouseButton1Click:Connect(function()
         if isWindowOpen then
             if DropShadowHolder then
@@ -2682,7 +2680,6 @@ function StreeHub:Window(GuiConfig)
         isWindowOpen = not isWindowOpen
     end)
 
-    -- Animasi hover
     Button.MouseEnter:Connect(function()
         TweenService:Create(Scale, TweenInfo.new(0.1), { Scale = 1.2 }):Play()
     end)
@@ -2691,7 +2688,6 @@ function StreeHub:Window(GuiConfig)
         TweenService:Create(Scale, TweenInfo.new(0.1), { Scale = 1 }):Play()
     end)
 
-    -- Hancurkan tombol ketika window dihancurkan
     function GuiFunc:OnDestroy(callback)
         if callback then
             Close.Activated:Connect(function()
@@ -2703,7 +2699,6 @@ function StreeHub:Window(GuiConfig)
         end
     end
 
-    -- Gabungkan GuiFunc ke Tabs
     for k, v in pairs(GuiFunc) do
         Tabs[k] = v
     end
