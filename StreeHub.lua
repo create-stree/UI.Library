@@ -513,7 +513,6 @@ function StreeHub:Window(GuiConfig)
     local LayersPageLayout = Instance.new("UIPageLayout");
 
     StreeHub.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-    StreeHub = "StreeHub"
     StreeHub.ResetOnSpawn = false
     StreeHub.Parent = game:GetService("CoreGui")
 
