@@ -1,17 +1,17 @@
 local HttpService = game:GetService("HttpService")
 
-if not isfolder("Triplesixxx") then
-    makefolder("Triplesixxx")
+if not isfolder("StreeHub") then
+    makefolder("StreeHub")
 end
-if not isfolder("Triplesixxx/Config") then
-    makefolder("Triplesixxx/Config")
+if not isfolder("StreeHub/Config") then
+    makefolder("StreeHub/Config")
 end
 
 local gameName   = tostring(game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name)
 gameName         = gameName:gsub("[^%w_ ]", "")
 gameName         = gameName:gsub("%s+", "_")
 
-local ConfigFile = "Triplesixxx/Config/Triplesixxx_" .. gameName .. ".json"
+local ConfigFile = "StreeHub/Config/StreeHub_" .. gameName .. ".json"
 
 ConfigData       = {}
 Elements         = {}
@@ -53,46 +53,46 @@ function LoadConfigElements()
 end
 
 local Icons = {
-    player    = "rbxassetid://12120698352",
-    web       = "rbxassetid://137601480983962",
-    bag       = "rbxassetid://8601111810",
-    shop      = "rbxassetid://4985385964",
-    cart      = "rbxassetid://128874923961846",
-    plug      = "rbxassetid://137601480983962",
-    settings  = "rbxassetid://70386228443175",
-    loop      = "rbxassetid://122032243989747",
-    gps       = "rbxassetid://17824309485",
-    compas    = "rbxassetid://125300760963399",
-    gamepad   = "rbxassetid://84173963561612",
-    boss      = "rbxassetid://13132186360",
-    scroll    = "rbxassetid://114127804740858",
-    menu      = "rbxassetid://6340513838",
-    crosshair = "rbxassetid://12614416478",
-    user      = "rbxassetid://108483430622128",
-    stat      = "rbxassetid://12094445329",
-    eyes      = "rbxassetid://14321059114",
-    sword     = "rbxassetid://82472368671405",
-    discord   = "rbxassetid://94434236999817",
-    star      = "rbxassetid://107005941750079",
-    skeleton  = "rbxassetid://17313330026",
-    payment   = "rbxassetid://18747025078",
-    scan      = "rbxassetid://109869955247116",
     alert     = "rbxassetid://73186275216515",
-    question  = "rbxassetid://17510196486",
-    idea      = "rbxassetid://16833255748",
-    strom     = "rbxassetid://13321880293",
-    water     = "rbxassetid://100076212630732",
+    bag       = "rbxassetid://8601111810",
+    boss      = "rbxassetid://13132186360",
+    cart      = "rbxassetid://128874923961846",
+    compas    = "rbxassetid://125300760963399",
+    crosshair = "rbxassetid://12614416478",
     dcs       = "rbxassetid://15310731934",
-    start     = "rbxassetid://108886429866687",
-    next      = "rbxassetid://12662718374",
-    rod       = "rbxassetid://103247953194129",
+    discord   = "rbxassetid://94434236999817",
+    eyes      = "rbxassetid://14321059114",
     fish      = "rbxassetid://97167558235554",
-    handshake      = "rbxassetid://118812884427306",
-    pinmap      = "rbxassetid://134722365781829",
-    map      = "rbxassetid://115690060447581",
+    fishing   = "rbxassetid://82305997222115",
+    fishings  = "rbxassetid://74455513763045",
+    gamepad   = "rbxassetid://84173963561612",
+    gps       = "rbxassetid://17824309485",
+    handshake = "rbxassetid://118812884427306",
     home      = "rbxassetid://135016593915894",
-    fishing      = "rbxassetid://82305997222115",
-    fishings      = "rbxassetid://74455513763045",
+    idea      = "rbxassetid://16833255748",
+    loop      = "rbxassetid://122032243989747",
+    map       = "rbxassetid://115690060447581",
+    menu      = "rbxassetid://6340513838",
+    next      = "rbxassetid://12662718374",
+    payment   = "rbxassetid://18747025078",
+    pinmap    = "rbxassetid://134722365781829",
+    player    = "rbxassetid://12120698352",
+    plug      = "rbxassetid://137601480983962",
+    question  = "rbxassetid://17510196486",
+    rod       = "rbxassetid://103247953194129",
+    scan      = "rbxassetid://109869955247116",
+    scroll    = "rbxassetid://114127804740858",
+    settings  = "rbxassetid://70386228443175",
+    shop      = "rbxassetid://4985385964",
+    skeleton  = "rbxassetid://17313330026",
+    star      = "rbxassetid://107005941750079",
+    start     = "rbxassetid://108886429866687",
+    stat      = "rbxassetid://12094445329",
+    strom     = "rbxassetid://13321880293",
+    sword     = "rbxassetid://82472368671405",
+    user      = "rbxassetid://108483430622128",
+    water     = "rbxassetid://100076212630732",
+    web       = "rbxassetid://137601480983962",
 }
 
 local UserInputService = game:GetService("UserInputService")
@@ -234,7 +234,7 @@ function CircleClick(Button, X, Y)
     spawn(function()
         Button.ClipsDescendants = true
         local Circle = Instance.new("ImageLabel")
-        Circle.Image = "rbxassetid://266543268"
+        Circle.Image = "rbxassetid://128806139932217"
         Circle.ImageColor3 = Color3.fromRGB(255, 0, 0)
         Circle.ImageTransparency = 0.8999999761581421
         Circle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -266,10 +266,10 @@ function CircleClick(Button, X, Y)
     end)
 end
 
-local Triplesixxx = {}
-function Triplesixxx:MakeNotify(NotifyConfig)
+local StreeHub = {}
+function StreeHub:MakeNotify(NotifyConfig)
     local NotifyConfig = NotifyConfig or {}
-    NotifyConfig.Title = NotifyConfig.Title or "Triplesixxx"
+    NotifyConfig.Title = NotifyConfig.Title or "StreeHub"
     NotifyConfig.Description = NotifyConfig.Description or "Notification"
     NotifyConfig.Content = NotifyConfig.Content or "Content"
     NotifyConfig.Color = NotifyConfig.Color or Color3.fromRGB(255, 0, 0)
@@ -465,9 +465,9 @@ function Triplesixxx:MakeNotify(NotifyConfig)
     return NotifyFunction
 end
 
-function triplesixxx(msg, delay, color, title, desc)
-    return Triplesixxx:MakeNotify({
-        Title = title or "Triplesixxx",
+function StreeHub(msg, delay, color, title, desc)
+    return StreeHub:MakeNotify({
+        Title = title or "StreeHub",
         Description = desc or "Notification",
         Content = msg or "Content",
         Color = color or Color3.fromRGB(255, 0, 0),
@@ -475,10 +475,10 @@ function triplesixxx(msg, delay, color, title, desc)
     })
 end
 
-function Triplesixxx:Window(GuiConfig)
+function StreeHub:Window(GuiConfig)
     GuiConfig              = GuiConfig or {}
-    GuiConfig.Title        = GuiConfig.Title or "Triplesixxx"
-    GuiConfig.Footer       = GuiConfig.Footer or "Triplesixxx :3"
+    GuiConfig.Title        = GuiConfig.Title or "StreeHub"
+    GuiConfig.Footer       = GuiConfig.Footer or "StreeHub 3:"
     GuiConfig.Color        = GuiConfig.Color or Color3.fromRGB(255, 0, 0)
     GuiConfig["Tab Width"] = GuiConfig["Tab Width"] or 120
     GuiConfig.Version      = GuiConfig.Version or 1
@@ -488,7 +488,7 @@ function Triplesixxx:Window(GuiConfig)
 
     local GuiFunc = {}
 
-    local Triplesixxxx = Instance.new("ScreenGui");
+    local StreeHub = Instance.new("ScreenGui");
     local DropShadowHolder = Instance.new("Frame");
     local DropShadow = Instance.new("ImageLabel");
     local Main = Instance.new("Frame");
@@ -511,10 +511,10 @@ function Triplesixxx:Window(GuiConfig)
     local LayersFolder = Instance.new("Folder");
     local LayersPageLayout = Instance.new("UIPageLayout");
 
-    Triplesixxxx.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-    Triplesixxxx.Name = "Triplesixxxx"
-    Triplesixxxx.ResetOnSpawn = false
-    Triplesixxxx.Parent = game:GetService("CoreGui")
+    StreeHub.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    StreeHub = "StreeHub"
+    StreeHub.ResetOnSpawn = false
+    StreeHub.Parent = game:GetService("CoreGui")
 
     DropShadowHolder.BackgroundTransparency = 1
     DropShadowHolder.BorderSizePixel = 0
@@ -529,7 +529,7 @@ function Triplesixxx:Window(GuiConfig)
     DropShadowHolder.Name = "DropShadowHolder"
     DropShadowHolder.Parent = Triplesixxxx
 
-    DropShadowHolder.Position = UDim2.new(0, (Triplesixxxx.AbsoluteSize.X // 2 - DropShadowHolder.Size.X.Offset // 2), 0,
+    DropShadowHolder.Position = UDim2.new(0, (StreeHub.AbsoluteSize.X // 2 - DropShadowHolder.Size.X.Offset // 2), 0,
         (Triplesixxxx.AbsoluteSize.Y // 2 - DropShadowHolder.Size.Y.Offset // 2))
     DropShadow.Image = "rbxassetid://6015897843"
     DropShadow.ImageColor3 = Color3.fromRGB(15, 15, 15)
@@ -753,8 +753,8 @@ function Triplesixxx:Window(GuiConfig)
     ScrollTab.ChildRemoved:Connect(UpdateSize1)
 
     function GuiFunc:DestroyGui()
-        if CoreGui:FindFirstChild("Triplesixxxx") then
-            Triplesixxxx:Destroy()
+        if CoreGui:FindFirstChild("StreeHub") then
+            StreeHub:Destroy()
         end
     end
 
@@ -811,7 +811,7 @@ function Triplesixxx:Window(GuiConfig)
         Title.Position = UDim2.new(0, 0, 0, 4)
         Title.BackgroundTransparency = 1
         Title.Font = Enum.Font.GothamBold
-        Title.Text = "Triplesixxx Window"
+        Title.Text = "StreeHub Window"
         Title.TextSize = 22
         Title.TextColor3 = Color3.fromRGB(255, 255, 255)
         Title.ZIndex = 52
@@ -860,7 +860,7 @@ function Triplesixxx:Window(GuiConfig)
         Instance.new("UICorner", Cancel).CornerRadius = UDim.new(0, 6)
 
         Yes.MouseButton1Click:Connect(function()
-            if Triplesixxxx then Triplesixxxx:Destroy() end
+            if StreeHub then StreeHub:Destroy() end
         end)
 
         Cancel.MouseButton1Click:Connect(function()
@@ -2642,18 +2642,18 @@ function Triplesixxx:Window(GuiConfig)
     end
 
     -- Buat instance untuk WalvyCommunity Button
-    local WalvyCommunity = Instance.new("ScreenGui")
+    local StreeHub = Instance.new("ScreenGui")
     local Button = Instance.new("ImageButton")
     local Corner = Instance.new("UICorner")
     local Scale = Instance.new("UIScale")
 
-    WalvyCommunity.Name = 'WalvyCommunityButton'
-    WalvyCommunity.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-    WalvyCommunity.ResetOnSpawn = false
-    WalvyCommunity.Parent = game:GetService('CoreGui')
+    StreeHub = 'StreeHubButton'
+    StreeHub.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    StreeHub.ResetOnSpawn = false
+    StreeHub.Parent = game:GetService('CoreGui')
 
-    Button.Name = 'WalvyCommunity'
-    Button.Parent = WalvyCommunity
+    Button.Name = 'StreeHub'
+    Button.Parent = StreeHub
     Button.BackgroundTransparency = 1
     Button.Size = UDim2.new(0, 60, 0, 60)
     Button.Position = UDim2.new(0, 10, 0, 60)
@@ -2696,8 +2696,8 @@ function Triplesixxx:Window(GuiConfig)
         if callback then
             Close.Activated:Connect(function()
                 callback()
-                if WalvyCommunity then
-                    WalvyCommunity:Destroy()
+                if StreeHub then
+                    StreeHub:Destroy()
                 end
             end)
         end
@@ -2713,4 +2713,4 @@ end
 
 LoadConfigElements()
 
-return Triplesixxx
+return StreeHub
