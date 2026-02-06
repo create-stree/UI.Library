@@ -232,7 +232,7 @@ function CircleClick(Button, X, Y)
     spawn(function()
         Button.ClipsDescendants = true
         local Circle = Instance.new("ImageLabel")
-        Circle.Image = "rbxassetid://128806139932217"
+        Circle.Image = "rbxassetid://122683047852451"
         Circle.ImageColor3 = Color3.fromRGB(255, 0, 0)
         Circle.ImageTransparency = 0.8999999761581421
         Circle.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
