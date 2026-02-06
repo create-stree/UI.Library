@@ -2647,21 +2647,22 @@ function StreeHub:Window(GuiConfig)
     local Corner = Instance.new("UICorner")
     local Scale = Instance.new("UIScale")
 
-    StreeHub = 'StreeHubButton'
+    StreeHub.Name = "StreeHubButton"
     StreeHub.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
     StreeHub.ResetOnSpawn = false
-    StreeHub.Parent = game:GetService('CoreGui')
+    StreeHub.Parent = game:GetService("CoreGui")
 
-    Button.Name = 'StreeHub'
+    Button.Name = "StreeHub"
     Button.Parent = StreeHub
     Button.BackgroundTransparency = 1
     Button.Size = UDim2.new(0, 60, 0, 60)
     Button.Position = UDim2.new(0, 10, 0, 60)
-    Button.Image = 'rbxassetid://107816383763884'
+    Button.Image = "rbxassetid://107816383763884"
     Button.Draggable = true
 
     Corner.CornerRadius = UDim.new(0, 16)
     Corner.Parent = Button
+
     Scale.Scale = 1
     Scale.Parent = Button
 
