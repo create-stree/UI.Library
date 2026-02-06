@@ -12,6 +12,7 @@ gameName = gameName:gsub("[^%w_ ]", "")
 gameName = gameName:gsub("%s+", "_")
 
 local ConfigFile = "StreeHub/Config/StreeHub_" .. gameName .. ".json"
+
 ConfigData = {}
 Elements = {}
 CURRENT_VERSION = nil
@@ -102,9 +103,7 @@ local CoreGui = game:GetService("CoreGui")
 local viewport = workspace.CurrentCamera.ViewportSize
 
 local function isMobileDevice()
-    return UserInputService.TouchEnabled
-        and not UserInputService.KeyboardEnabled
-        and not UserInputService.MouseEnabled
+    return UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled and not UserInputService.MouseEnabled
 end
 
 local isMobile = isMobileDevice()
@@ -265,6 +264,7 @@ function CircleClick(Button, X, Y)
 end
 
 local StreeHub = {}
+
 function StreeHub:MakeNotify(NotifyConfig)
     local NotifyConfig = NotifyConfig or {}
     NotifyConfig.Title = NotifyConfig.Title or "StreeHub"
@@ -274,6 +274,7 @@ function StreeHub:MakeNotify(NotifyConfig)
     NotifyConfig.Time = NotifyConfig.Time or 0.5
     NotifyConfig.Delay = NotifyConfig.Delay or 5
     local NotifyFunction = {}
+    
     spawn(function()
         if not CoreGui:FindFirstChild("NotifyGui") then
             local NotifyGui = Instance.new("ScreenGui")
@@ -281,6 +282,7 @@ function StreeHub:MakeNotify(NotifyConfig)
             NotifyGui.Name = "NotifyGui"
             NotifyGui.Parent = CoreGui
         end
+        
         if not CoreGui.NotifyGui:FindFirstChild("NotifyLayout") then
             local NotifyLayout = Instance.new("Frame")
             NotifyLayout.AnchorPoint = Vector2.new(1, 1)
@@ -292,6 +294,7 @@ function StreeHub:MakeNotify(NotifyConfig)
             NotifyLayout.Size = UDim2.new(0, 320, 1, 0)
             NotifyLayout.Name = "NotifyLayout"
             NotifyLayout.Parent = CoreGui.NotifyGui
+            
             local Count = 0
             CoreGui.NotifyGui.NotifyLayout.ChildRemoved:Connect(function()
                 Count = 0
@@ -301,10 +304,12 @@ function StreeHub:MakeNotify(NotifyConfig)
                 end
             end)
         end
+        
         local NotifyPosHeigh = 0
         for i, v in CoreGui.NotifyGui.NotifyLayout:GetChildren() do
             NotifyPosHeigh = -(v.Position.Y.Offset) + v.Size.Y.Offset + 12
         end
+        
         local NotifyFrame = Instance.new("Frame")
         local NotifyFrameReal = Instance.new("Frame")
         local UICorner = Instance.new("UICorner")
@@ -430,6 +435,7 @@ function StreeHub:MakeNotify(NotifyConfig)
         else
             NotifyFrame.Size = UDim2.new(1, 0, 0, TextLabel2.AbsoluteSize.Y + 40)
         end
+        
         local waitbruh = false
         function NotifyFunction:Close()
             if waitbruh then
@@ -444,6 +450,7 @@ function StreeHub:MakeNotify(NotifyConfig)
         Close.Activated:Connect(function()
             NotifyFunction:Close()
         end)
+        
         TweenService:Create(NotifyFrameReal, TweenInfo.new(tonumber(NotifyConfig.Time), Enum.EasingStyle.Back, Enum.EasingDirection.InOut), { Position = UDim2.new(0, 0, 0, 0) }):Play()
         task.wait(tonumber(NotifyConfig.Delay))
         NotifyFunction:Close()
@@ -451,30 +458,23 @@ function StreeHub:MakeNotify(NotifyConfig)
     return NotifyFunction
 end
 
-function StreeHubNotify(msg, delay, color, title, desc)
-    return StreeHub:MakeNotify({
-        Title = title or "StreeHub",
-        Description = desc or "Notification",
-        Content = msg or "Content",
-        Color = color or Color3.fromRGB(255, 0, 0),
-        Delay = delay or 4
-    })
-end
-
 function StreeHub:Window(GuiConfig)
     GuiConfig = GuiConfig or {}
     GuiConfig.Title = GuiConfig.Title or "StreeHub"
-    GuiConfig.Footer = GuiConfig.Footer or "StreeHub 3:"
+    GuiConfig.Footer = GuiConfig.Footer or "StreeHub"
     GuiConfig.Color = GuiConfig.Color or Color3.fromRGB(255, 0, 0)
     GuiConfig["Tab Width"] = GuiConfig["Tab Width"] or 120
     GuiConfig.Version = GuiConfig.Version or 1
+    GuiConfig.Theme = GuiConfig.Theme
+    GuiConfig.ThemeTransparency = GuiConfig.ThemeTransparency or 0.15
 
     CURRENT_VERSION = GuiConfig.Version
     LoadConfigFromFile()
 
     local GuiFunc = {}
+    local Tabs = {}
 
-    local StreeHubGui = Instance.new("ScreenGui")
+    local StreeHubUI = Instance.new("ScreenGui")
     local DropShadowHolder = Instance.new("Frame")
     local DropShadow = Instance.new("ImageLabel")
     local Main = Instance.new("Frame")
@@ -497,23 +497,25 @@ function StreeHub:Window(GuiConfig)
     local LayersFolder = Instance.new("Folder")
     local LayersPageLayout = Instance.new("UIPageLayout")
 
-    StreeHubGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-    StreeHubGui.Name = "StreeHub"
-    StreeHubGui.ResetOnSpawn = false
-    StreeHubGui.Parent = game:GetService("CoreGui")
+    StreeHubUI.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    StreeHubUI.Name = "StreeHub"
+    StreeHubUI.ResetOnSpawn = false
+    StreeHubUI.Parent = game:GetService("CoreGui")
 
     DropShadowHolder.BackgroundTransparency = 1
     DropShadowHolder.BorderSizePixel = 0
     DropShadowHolder.AnchorPoint = Vector2.new(0.5, 0.5)
     DropShadowHolder.Position = UDim2.new(0.5, 0, 0.5, 0)
+    
     if isMobile then
         DropShadowHolder.Size = safeSize(470, 270)
     else
         DropShadowHolder.Size = safeSize(640, 400)
     end
+    
     DropShadowHolder.ZIndex = 0
     DropShadowHolder.Name = "DropShadowHolder"
-    DropShadowHolder.Parent = StreeHubGui
+    DropShadowHolder.Parent = StreeHubUI
 
     DropShadow.Image = "rbxassetid://6015897843"
     DropShadow.ImageColor3 = Color3.fromRGB(15, 15, 15)
@@ -732,12 +734,13 @@ function StreeHub:Window(GuiConfig)
         end
         ScrollTab.CanvasSize = UDim2.new(0, 0, 0, OffsetY)
     end
+    
     ScrollTab.ChildAdded:Connect(UpdateSize1)
     ScrollTab.ChildRemoved:Connect(UpdateSize1)
 
     function GuiFunc:DestroyGui()
         if CoreGui:FindFirstChild("StreeHub") then
-            StreeHubGui:Destroy()
+            StreeHubUI:Destroy()
         end
     end
 
@@ -745,6 +748,7 @@ function StreeHub:Window(GuiConfig)
         CircleClick(Min, Mouse.X, Mouse.Y)
         DropShadowHolder.Visible = false
     end)
+    
     Close.Activated:Connect(function()
         CircleClick(Close, Mouse.X, Mouse.Y)
 
@@ -843,7 +847,7 @@ function StreeHub:Window(GuiConfig)
         Instance.new("UICorner", Cancel).CornerRadius = UDim.new(0, 6)
 
         Yes.MouseButton1Click:Connect(function()
-            if StreeHubGui then StreeHubGui:Destroy() end
+            StreeHubUI:Destroy()
         end)
 
         Cancel.MouseButton1Click:Connect(function()
@@ -942,6 +946,7 @@ function StreeHub:Window(GuiConfig)
             MoreBlur.Visible = false
         end
     end)
+    
     UICorner36.CornerRadius = UDim.new(0, 3)
     UICorner36.Parent = DropdownSelect
 
@@ -972,10 +977,10 @@ function StreeHub:Window(GuiConfig)
     DropPageLayout.Archivable = false
     DropPageLayout.Name = "DropPageLayout"
     DropPageLayout.Parent = DropdownFolder
-
-    local Tabs = {}
+    
     local CountTab = 0
     local CountDropdown = 0
+    
     function Tabs:AddTab(TabConfig)
         local TabConfig = TabConfig or {}
         TabConfig.Name = TabConfig.Name or "Tab"
@@ -1014,6 +1019,7 @@ function StreeHub:Window(GuiConfig)
         else
             Tab.BackgroundTransparency = 0.9990000128746033
         end
+        
         Tab.BorderColor3 = Color3.fromRGB(0, 0, 0)
         Tab.BorderSizePixel = 0
         Tab.LayoutOrder = CountTab
@@ -1059,6 +1065,7 @@ function StreeHub:Window(GuiConfig)
         FeatureImg.Size = UDim2.new(0, 16, 0, 16)
         FeatureImg.Name = "FeatureImg"
         FeatureImg.Parent = Tab
+        
         if CountTab == 0 then
             LayersPageLayout:JumpToIndex(0)
             NameTab.Text = TabConfig.Name
@@ -1097,12 +1104,14 @@ function StreeHub:Window(GuiConfig)
                     end
                 end
             end
+            
             if FrameChoose ~= nil and Tab.LayoutOrder ~= LayersPageLayout.CurrentPage.LayoutOrder then
                 for _, TabFrame in ScrollTab:GetChildren() do
                     if TabFrame.Name == "Tab" then
                         TweenService:Create(TabFrame, TweenInfo.new(0.3, Enum.EasingStyle.Back, Enum.EasingDirection.InOut), { BackgroundTransparency = 0.9990000128746033 }):Play()
                     end
                 end
+                
                 TweenService:Create(Tab, TweenInfo.new(0.6, Enum.EasingStyle.Back, Enum.EasingDirection.InOut), { BackgroundTransparency = 0.9200000166893005 }):Play()
                 TweenService:Create(FrameChoose, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), { Position = UDim2.new(0, 2, 0, 9 + (33 * Tab.LayoutOrder)) }):Play()
                 LayersPageLayout:JumpToIndex(Tab.LayoutOrder)
@@ -1113,9 +1122,10 @@ function StreeHub:Window(GuiConfig)
                 TweenService:Create(FrameChoose, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), { Size = UDim2.new(0, 1, 0, 12) }):Play()
             end
         end)
-
+        
         local Sections = {}
         local CountSection = 0
+        
         function Sections:AddSection(Title, AlwaysOpen)
             local Title = Title or "Title"
             local Section = Instance.new("Frame")
@@ -1136,7 +1146,6 @@ function StreeHub:Window(GuiConfig)
 
             local SectionReal = Instance.new("Frame")
             local UICorner = Instance.new("UICorner")
-            local UIStroke = Instance.new("UIStroke")
             local SectionButton = Instance.new("TextButton")
             local FeatureFrame = Instance.new("Frame")
             local FeatureImg = Instance.new("ImageLabel")
@@ -1217,11 +1226,11 @@ function StreeHub:Window(GuiConfig)
 
             UICorner1.Parent = SectionDecideFrame
 
-            UIGradient.Color = ColorSequence.new {
+            UIGradient.Color = ColorSequence.new({
                 ColorSequenceKeypoint.new(0, Color3.fromRGB(20, 20, 20)),
                 ColorSequenceKeypoint.new(0.5, GuiConfig.Color),
                 ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 20, 20))
-            }
+            })
             UIGradient.Parent = SectionDecideFrame
 
             local SectionAdd = Instance.new("Frame")
@@ -1332,11 +1341,14 @@ function StreeHub:Window(GuiConfig)
 
             local Items = {}
             local CountItem = 0
-
+            
             function Items:AddParagraph(ParagraphConfig)
                 local ParagraphConfig = ParagraphConfig or {}
                 ParagraphConfig.Title = ParagraphConfig.Title or "Title"
                 ParagraphConfig.Content = ParagraphConfig.Content or "Content"
+                ParagraphConfig.Icon = ParagraphConfig.Icon
+                ParagraphConfig.ButtonText = ParagraphConfig.ButtonText
+                ParagraphConfig.ButtonCallback = ParagraphConfig.ButtonCallback
                 local ParagraphFunc = {}
 
                 local Paragraph = Instance.new("Frame")
@@ -1369,7 +1381,6 @@ function StreeHub:Window(GuiConfig)
                     else
                         IconImg.Image = ParagraphConfig.Icon
                     end
-
                     iconOffset = 30
                 end
 
@@ -1432,7 +1443,6 @@ function StreeHub:Window(GuiConfig)
                 end
 
                 UpdateSize()
-
                 ParagraphContent:GetPropertyChangedSignal("TextBounds"):Connect(UpdateSize)
 
                 function ParagraphFunc:SetContent(content)
@@ -1444,7 +1454,7 @@ function StreeHub:Window(GuiConfig)
                 CountItem = CountItem + 1
                 return ParagraphFunc
             end
-
+            
             function Items:AddPanel(PanelConfig)
                 PanelConfig = PanelConfig or {}
                 PanelConfig.Title = PanelConfig.Title or "Title"
@@ -1464,11 +1474,9 @@ function StreeHub:Window(GuiConfig)
                 local PanelFunc = { Value = PanelConfig.Default }
 
                 local baseHeight = 50
-
                 if PanelConfig.Placeholder then
                     baseHeight = baseHeight + 40
                 end
-
                 if PanelConfig.SubButtonText then
                     baseHeight = baseHeight + 40
                 else
@@ -1602,7 +1610,7 @@ function StreeHub:Window(GuiConfig)
                 CountItem = CountItem + 1
                 return PanelFunc
             end
-
+            
             function Items:AddButton(ButtonConfig)
                 ButtonConfig = ButtonConfig or {}
                 ButtonConfig.Title = ButtonConfig.Title or "Confirm"
@@ -1661,7 +1669,7 @@ function StreeHub:Window(GuiConfig)
 
                 CountItem = CountItem + 1
             end
-
+            
             function Items:AddToggle(ToggleConfig)
                 local ToggleConfig = ToggleConfig or {}
                 ToggleConfig.Title = ToggleConfig.Title or "Title"
@@ -1828,7 +1836,7 @@ function StreeHub:Window(GuiConfig)
                 Elements[configKey] = ToggleFunc
                 return ToggleFunc
             end
-
+            
             function Items:AddSlider(SliderConfig)
                 local SliderConfig = SliderConfig or {}
                 SliderConfig.Title = SliderConfig.Title or "Slider"
@@ -1989,6 +1997,7 @@ function StreeHub:Window(GuiConfig)
                     end
                     return Result
                 end
+                
                 function SliderFunc:Set(Value)
                     Value = math.clamp(Round(Value, SliderConfig.Increment), SliderConfig.Min, SliderConfig.Max)
                     SliderFunc.Value = Value
@@ -2033,12 +2042,13 @@ function StreeHub:Window(GuiConfig)
                         SliderFunc:Set(SliderConfig.Min)
                     end
                 end)
+                
                 SliderFunc:Set(SliderConfig.Default)
                 CountItem = CountItem + 1
                 Elements[configKey] = SliderFunc
                 return SliderFunc
             end
-
+            
             function Items:AddInput(InputConfig)
                 local InputConfig = InputConfig or {}
                 InputConfig.Title = InputConfig.Title or "Title"
@@ -2148,6 +2158,7 @@ function StreeHub:Window(GuiConfig)
                 InputTextBox.Size = UDim2.new(1, -10, 1, -8)
                 InputTextBox.Name = "InputTextBox"
                 InputTextBox.Parent = InputFrame
+                
                 function InputFunc:Set(Value)
                     InputTextBox.Text = Value
                     InputFunc.Value = Value
@@ -2161,6 +2172,7 @@ function StreeHub:Window(GuiConfig)
                 InputTextBox.FocusLost:Connect(function()
                     InputFunc:Set(InputTextBox.Text)
                 end)
+                
                 CountItem = CountItem + 1
                 Elements[configKey] = InputFunc
                 return InputFunc
@@ -2484,7 +2496,7 @@ function StreeHub:Window(GuiConfig)
                 Elements[configKey] = DropdownFunc
                 return DropdownFunc
             end
-
+            
             function Items:AddDivider()
                 local Divider = Instance.new("Frame")
                 Divider.Name = "Divider"
@@ -2498,11 +2510,11 @@ function StreeHub:Window(GuiConfig)
                 Divider.LayoutOrder = CountItem
 
                 local UIGradient = Instance.new("UIGradient")
-                UIGradient.Color = ColorSequence.new {
+                UIGradient.Color = ColorSequence.new({
                     ColorSequenceKeypoint.new(0, Color3.fromRGB(20, 20, 20)),
                     ColorSequenceKeypoint.new(0.5, GuiConfig.Color),
                     ColorSequenceKeypoint.new(1, Color3.fromRGB(20, 20, 20))
-                }
+                })
                 UIGradient.Parent = Divider
 
                 local UICorner = Instance.new("UICorner")
@@ -2512,7 +2524,7 @@ function StreeHub:Window(GuiConfig)
                 CountItem = CountItem + 1
                 return Divider
             end
-
+            
             function Items:AddSubSection(title)
                 title = title or "Sub Section"
 
@@ -2552,27 +2564,25 @@ function StreeHub:Window(GuiConfig)
         end
 
         CountTab = CountTab + 1
-        local safeName = TabConfig.Name:gsub("%s+", "_")
-        _G[safeName] = Sections
         return Sections
     end
 
-    local StreeHubButtonGui = Instance.new("ScreenGui")
+    local StreeHubButton = Instance.new("ScreenGui")
     local Button = Instance.new("ImageButton")
     local Corner = Instance.new("UICorner")
     local Scale = Instance.new("UIScale")
 
-    StreeHubButtonGui.Name = "StreeHubButton"
-    StreeHubButtonGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
-    StreeHubButtonGui.ResetOnSpawn = false
-    StreeHubButtonGui.Parent = game:GetService("CoreGui")
+    StreeHubButton.Name = "StreeHubButton"
+    StreeHubButton.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+    StreeHubButton.ResetOnSpawn = false
+    StreeHubButton.Parent = game:GetService('CoreGui')
 
-    Button.Name = "StreeHub"
-    Button.Parent = StreeHubButtonGui
+    Button.Name = 'StreeHub'
+    Button.Parent = StreeHubButton
     Button.BackgroundTransparency = 1
     Button.Size = UDim2.new(0, 60, 0, 60)
     Button.Position = UDim2.new(0, 10, 0, 60)
-    Button.Image = "rbxassetid://107816383763884"
+    Button.Image = 'rbxassetid://107816383763884'
     Button.Draggable = true
 
     Corner.CornerRadius = UDim.new(0, 16)
@@ -2607,8 +2617,8 @@ function StreeHub:Window(GuiConfig)
         if callback then
             Close.Activated:Connect(function()
                 callback()
-                if StreeHubGui then
-                    StreeHubGui:Destroy()
+                if StreeHubUI then
+                    StreeHubUI:Destroy()
                 end
             end)
         end
@@ -2618,6 +2628,8 @@ function StreeHub:Window(GuiConfig)
         Tabs[k] = v
     end
 
+    LoadConfigElements()
+    
     return Tabs
 end
 
