@@ -3,6 +3,7 @@ local HttpService = game:GetService("HttpService")
 if not isfolder("StreeHub") then
     makefolder("StreeHub")
 end
+
 if not isfolder("StreeHub/Config") then
     makefolder("StreeHub/Config")
 end
@@ -12,7 +13,6 @@ gameName = gameName:gsub("[^%w_ ]", "")
 gameName = gameName:gsub("%s+", "_")
 
 local ConfigFile = "StreeHub/Config/StreeHub_" .. gameName .. ".json"
-
 ConfigData = {}
 Elements = {}
 CURRENT_VERSION = nil
@@ -25,22 +25,32 @@ function SaveConfig()
 end
 
 function LoadConfigFromFile()
-    if not CURRENT_VERSION then return end
+    if not CURRENT_VERSION then
+        return
+    end
+
     if isfile and isfile(ConfigFile) then
         local success, result = pcall(function()
             return HttpService:JSONDecode(readfile(ConfigFile))
         end)
+
         if success and type(result) == "table" then
             if result._version == CURRENT_VERSION then
                 ConfigData = result
             else
-                ConfigData = { _version = CURRENT_VERSION }
+                ConfigData = {
+                    _version = CURRENT_VERSION
+                }
             end
         else
-            ConfigData = { _version = CURRENT_VERSION }
+            ConfigData = {
+                _version = CURRENT_VERSION
+            }
         end
     else
-        ConfigData = { _version = CURRENT_VERSION }
+        ConfigData = {
+            _version = CURRENT_VERSION
+        }
     end
 end
 
@@ -53,46 +63,46 @@ function LoadConfigElements()
 end
 
 local Icons = {
-    alert     = "rbxassetid://73186275216515",
-    bag       = "rbxassetid://8601111810",
-    boss      = "rbxassetid://13132186360",
-    cart      = "rbxassetid://128874923961846",
-    compas    = "rbxassetid://125300760963399",
+    alert = "rbxassetid://73186275216515",
+    bag = "rbxassetid://8601111810",
+    boss = "rbxassetid://13132186360",
+    cart = "rbxassetid://128874923961846",
+    compas = "rbxassetid://125300760963399",
     crosshair = "rbxassetid://12614416478",
-    dcs       = "rbxassetid://15310731934",
-    discord   = "rbxassetid://94434236999817",
-    eyes      = "rbxassetid://14321059114",
-    fish      = "rbxassetid://97167558235554",
-    fishing   = "rbxassetid://82305997222115",
-    fishings  = "rbxassetid://74455513763045",
-    gamepad   = "rbxassetid://84173963561612",
-    gps       = "rbxassetid://17824309485",
+    dcs = "rbxassetid://15310731934",
+    discord = "rbxassetid://94434236999817",
+    eyes = "rbxassetid://14321059114",
+    fish = "rbxassetid://97167558235554",
+    fishing = "rbxassetid://82305997222115",
+    fishings = "rbxassetid://74455513763045",
+    gamepad = "rbxassetid://84173963561612",
+    gps = "rbxassetid://17824309485",
     handshake = "rbxassetid://118812884427306",
-    home      = "rbxassetid://135016593915894",
-    idea      = "rbxassetid://16833255748",
-    loop      = "rbxassetid://122032243989747",
-    map       = "rbxassetid://115690060447581",
-    menu      = "rbxassetid://6340513838",
-    next      = "rbxassetid://12662718374",
-    payment   = "rbxassetid://18747025078",
-    pinmap    = "rbxassetid://134722365781829",
-    player    = "rbxassetid://12120698352",
-    plug      = "rbxassetid://137601480983962",
-    question  = "rbxassetid://17510196486",
-    rod       = "rbxassetid://103247953194129",
-    scan      = "rbxassetid://109869955247116",
-    scroll    = "rbxassetid://114127804740858",
-    settings  = "rbxassetid://70386228443175",
-    shop      = "rbxassetid://4985385964",
-    skeleton  = "rbxassetid://17313330026",
-    star      = "rbxassetid://107005941750079",
-    start     = "rbxassetid://108886429866687",
-    stat      = "rbxassetid://12094445329",
-    strom     = "rbxassetid://13321880293",
-    sword     = "rbxassetid://82472368671405",
-    user      = "rbxassetid://108483430622128",
-    water     = "rbxassetid://100076212630732",
-    web       = "rbxassetid://137601480983962",
+    home = "rbxassetid://135016593915894",
+    idea = "rbxassetid://16833255748",
+    loop = "rbxassetid://122032243989747",
+    map = "rbxassetid://115690060447581",
+    menu = "rbxassetid://6340513838",
+    next = "rbxassetid://12662718374",
+    payment = "rbxassetid://18747025078",
+    pinmap = "rbxassetid://134722365781829",
+    player = "rbxassetid://12120698352",
+    plug = "rbxassetid://137601480983962",
+    question = "rbxassetid://17510196486",
+    rod = "rbxassetid://103247953194129",
+    scan = "rbxassetid://109869955247116",
+    scroll = "rbxassetid://114127804740858",
+    settings = "rbxassetid://70386228443175",
+    shop = "rbxassetid://4985385964",
+    skeleton = "rbxassetid://17313330026",
+    star = "rbxassetid://107005941750079",
+    start = "rbxassetid://108886429866687",
+    stat = "rbxassetid://12094445329",
+    strom = "rbxassetid://13321880293",
+    sword = "rbxassetid://82472368671405",
+    user = "rbxassetid://108483430622128",
+    water = "rbxassetid://100076212630732",
+    web = "rbxassetid://137601480983962"
 }
 
 local UserInputService = game:GetService("UserInputService")
@@ -113,8 +123,13 @@ local function safeSize(pxWidth, pxHeight)
     local scaleY = pxHeight / viewport.Y
 
     if isMobile then
-        if scaleX > 0.5 then scaleX = 0.5 end
-        if scaleY > 0.3 then scaleY = 0.3 end
+        if scaleX > 0.5 then
+            scaleX = 0.5
+        end
+
+        if scaleY > 0.3 then
+            scaleY = 0.3
+        end
     end
 
     return UDim2.new(scaleX, 0, scaleY, 0)
@@ -132,7 +147,9 @@ local function MakeDraggable(topbarobject, object)
                 StartPosition.Y.Scale,
                 StartPosition.Y.Offset + Delta.Y
             )
-            local Tween = TweenService:Create(object, TweenInfo.new(0.2), { Position = pos })
+            local Tween = TweenService:Create(object, TweenInfo.new(0.2), {
+                Position = pos
+            })
             Tween:Play()
         end
 
@@ -164,16 +181,19 @@ local function MakeDraggable(topbarobject, object)
 
     local function CustomSize(object)
         local Dragging, DragInput, DragStart, StartSize
-
         local minSizeX, minSizeY
         local defSizeX, defSizeY
 
         if isMobile then
-            minSizeX, minSizeY = 100, 100
-            defSizeX, defSizeY = 470, 270
+            minSizeX = 100
+            minSizeY = 100
+            defSizeX = 470
+            defSizeY = 270
         else
-            minSizeX, minSizeY = 100, 100
-            defSizeX, defSizeY = 640, 400
+            minSizeX = 100
+            minSizeY = 100
+            defSizeX = 640
+            defSizeY = 400
         end
 
         object.Size = UDim2.new(0, defSizeX, 0, defSizeY)
@@ -190,11 +210,12 @@ local function MakeDraggable(topbarobject, object)
             local Delta = input.Position - DragStart
             local newWidth = StartSize.X.Offset + Delta.X
             local newHeight = StartSize.Y.Offset + Delta.Y
-
             newWidth = math.max(newWidth, minSizeX)
             newHeight = math.max(newHeight, minSizeY)
 
-            local Tween = TweenService:Create(object, TweenInfo.new(0.2), { Size = UDim2.new(0, newWidth, 0, newHeight) })
+            local Tween = TweenService:Create(object, TweenInfo.new(0.2), {
+                Size = UDim2.new(0, newWidth, 0, newHeight)
+            })
             Tween:Play()
         end
 
@@ -244,6 +265,7 @@ function CircleClick(Button, X, Y)
         local NewX = X - Circle.AbsolutePosition.X
         local NewY = Y - Circle.AbsolutePosition.Y
         Circle.Position = UDim2.new(0, NewX, 0, NewY)
+
         local Size = 0
         if Button.AbsoluteSize.X > Button.AbsoluteSize.Y then
             Size = Button.AbsoluteSize.X * 1.5
@@ -255,10 +277,12 @@ function CircleClick(Button, X, Y)
 
         local Time = 0.5
         Circle:TweenSizeAndPosition(UDim2.new(0, Size, 0, Size), UDim2.new(0.5, -Size / 2, 0.5, -Size / 2), "Out", "Quad", Time, false, nil)
+
         for i = 1, 10 do
             Circle.ImageTransparency = Circle.ImageTransparency + 0.01
             wait(Time / 10)
         end
+
         Circle:Destroy()
     end)
 end
@@ -274,7 +298,7 @@ function StreeHub:MakeNotify(NotifyConfig)
     NotifyConfig.Time = NotifyConfig.Time or 0.5
     NotifyConfig.Delay = NotifyConfig.Delay or 5
     local NotifyFunction = {}
-    
+
     spawn(function()
         if not CoreGui:FindFirstChild("NotifyGui") then
             local NotifyGui = Instance.new("ScreenGui")
@@ -282,7 +306,7 @@ function StreeHub:MakeNotify(NotifyConfig)
             NotifyGui.Name = "NotifyGui"
             NotifyGui.Parent = CoreGui
         end
-        
+
         if not CoreGui.NotifyGui:FindFirstChild("NotifyLayout") then
             local NotifyLayout = Instance.new("Frame")
             NotifyLayout.AnchorPoint = Vector2.new(1, 1)
@@ -294,22 +318,24 @@ function StreeHub:MakeNotify(NotifyConfig)
             NotifyLayout.Size = UDim2.new(0, 320, 1, 0)
             NotifyLayout.Name = "NotifyLayout"
             NotifyLayout.Parent = CoreGui.NotifyGui
-            
+
             local Count = 0
             CoreGui.NotifyGui.NotifyLayout.ChildRemoved:Connect(function()
                 Count = 0
                 for i, v in CoreGui.NotifyGui.NotifyLayout:GetChildren() do
-                    TweenService:Create(v, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), { Position = UDim2.new(0, 0, 1, -((v.Size.Y.Offset + 12) * Count)) }):Play()
+                    TweenService:Create(v, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+                        Position = UDim2.new(0, 0, 1, -((v.Size.Y.Offset + 12) * Count))
+                    }):Play()
                     Count = Count + 1
                 end
             end)
         end
-        
+
         local NotifyPosHeigh = 0
         for i, v in CoreGui.NotifyGui.NotifyLayout:GetChildren() do
             NotifyPosHeigh = -(v.Position.Y.Offset) + v.Size.Y.Offset + 12
         end
-        
+
         local NotifyFrame = Instance.new("Frame")
         local NotifyFrameReal = Instance.new("Frame")
         local UICorner = Instance.new("UICorner")
@@ -402,7 +428,7 @@ function StreeHub:MakeNotify(NotifyConfig)
         Close.Name = "Close"
         Close.Parent = Top
 
-        ImageLabel.Image = "rbxassetid://9886659671"
+        ImageLabel.Image = "rbxassetid://128806139932217"
         ImageLabel.AnchorPoint = Vector2.new(0.5, 0.5)
         ImageLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
         ImageLabel.BackgroundTransparency = 0.9990000128746033
@@ -435,14 +461,17 @@ function StreeHub:MakeNotify(NotifyConfig)
         else
             NotifyFrame.Size = UDim2.new(1, 0, 0, TextLabel2.AbsoluteSize.Y + 40)
         end
-        
+
         local waitbruh = false
+
         function NotifyFunction:Close()
             if waitbruh then
                 return false
             end
             waitbruh = true
-            TweenService:Create(NotifyFrameReal, TweenInfo.new(tonumber(NotifyConfig.Time), Enum.EasingStyle.Back, Enum.EasingDirection.InOut), { Position = UDim2.new(0, 400, 0, 0) }):Play()
+            TweenService:Create(NotifyFrameReal, TweenInfo.new(tonumber(NotifyConfig.Time), Enum.EasingStyle.Back, Enum.EasingDirection.InOut), {
+                Position = UDim2.new(0, 400, 0, 0)
+            }):Play()
             task.wait(tonumber(NotifyConfig.Time) / 1.2)
             NotifyFrame:Destroy()
         end
@@ -450,11 +479,14 @@ function StreeHub:MakeNotify(NotifyConfig)
         Close.Activated:Connect(function()
             NotifyFunction:Close()
         end)
-        
-        TweenService:Create(NotifyFrameReal, TweenInfo.new(tonumber(NotifyConfig.Time), Enum.EasingStyle.Back, Enum.EasingDirection.InOut), { Position = UDim2.new(0, 0, 0, 0) }):Play()
+
+        TweenService:Create(NotifyFrameReal, TweenInfo.new(tonumber(NotifyConfig.Time), Enum.EasingStyle.Back, Enum.EasingDirection.InOut), {
+            Position = UDim2.new(0, 0, 0, 0)
+        }):Play()
         task.wait(tonumber(NotifyConfig.Delay))
         NotifyFunction:Close()
     end)
+
     return NotifyFunction
 end
 
@@ -506,13 +538,13 @@ function StreeHub:Window(GuiConfig)
     DropShadowHolder.BorderSizePixel = 0
     DropShadowHolder.AnchorPoint = Vector2.new(0.5, 0.5)
     DropShadowHolder.Position = UDim2.new(0.5, 0, 0.5, 0)
-    
+
     if isMobile then
         DropShadowHolder.Size = safeSize(470, 270)
     else
         DropShadowHolder.Size = safeSize(640, 400)
     end
-    
+
     DropShadowHolder.ZIndex = 0
     DropShadowHolder.Name = "DropShadowHolder"
     DropShadowHolder.Parent = StreeHubUI
@@ -602,7 +634,7 @@ function StreeHub:Window(GuiConfig)
     Close.Name = "Close"
     Close.Parent = Top
 
-    ImageLabel1.Image = "rbxassetid://9886659671"
+    ImageLabel1.Image = "rbxassetid://128806139932217"
     ImageLabel1.AnchorPoint = Vector2.new(0.5, 0.5)
     ImageLabel1.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
     ImageLabel1.BackgroundTransparency = 0.9990000128746033
@@ -734,7 +766,7 @@ function StreeHub:Window(GuiConfig)
         end
         ScrollTab.CanvasSize = UDim2.new(0, 0, 0, OffsetY)
     end
-    
+
     ScrollTab.ChildAdded:Connect(UpdateSize1)
     ScrollTab.ChildRemoved:Connect(UpdateSize1)
 
@@ -748,7 +780,7 @@ function StreeHub:Window(GuiConfig)
         CircleClick(Min, Mouse.X, Mouse.Y)
         DropShadowHolder.Visible = false
     end)
-    
+
     Close.Activated:Connect(function()
         CircleClick(Close, Mouse.X, Mouse.Y)
 
@@ -857,7 +889,9 @@ function StreeHub:Window(GuiConfig)
 
     local ToggleKey = Enum.KeyCode.F3
     UserInputService.InputBegan:Connect(function(input, gpe)
-        if gpe then return end
+        if gpe then
+            return
+        end
         if input.KeyCode == ToggleKey then
             if DropShadowHolder then
                 DropShadowHolder.Visible = not DropShadowHolder.Visible
@@ -940,13 +974,17 @@ function StreeHub:Window(GuiConfig)
 
     ConnectButton.Activated:Connect(function()
         if MoreBlur.Visible then
-            TweenService:Create(MoreBlur, TweenInfo.new(0.3), { BackgroundTransparency = 0.999 }):Play()
-            TweenService:Create(DropdownSelect, TweenInfo.new(0.3), { Position = UDim2.new(1, 172, 0.5, 0) }):Play()
+            TweenService:Create(MoreBlur, TweenInfo.new(0.3), {
+                BackgroundTransparency = 0.999
+            }):Play()
+            TweenService:Create(DropdownSelect, TweenInfo.new(0.3), {
+                Position = UDim2.new(1, 172, 0.5, 0)
+            }):Play()
             task.wait(0.3)
             MoreBlur.Visible = false
         end
     end)
-    
+
     UICorner36.CornerRadius = UDim.new(0, 3)
     UICorner36.Parent = DropdownSelect
 
@@ -977,10 +1015,10 @@ function StreeHub:Window(GuiConfig)
     DropPageLayout.Archivable = false
     DropPageLayout.Name = "DropPageLayout"
     DropPageLayout.Parent = DropdownFolder
-    
+
     local CountTab = 0
     local CountDropdown = 0
-    
+
     function Tabs:AddTab(TabConfig)
         local TabConfig = TabConfig or {}
         TabConfig.Name = TabConfig.Name or "Tab"
@@ -1019,7 +1057,7 @@ function StreeHub:Window(GuiConfig)
         else
             Tab.BackgroundTransparency = 0.9990000128746033
         end
-        
+
         Tab.BorderColor3 = Color3.fromRGB(0, 0, 0)
         Tab.BorderSizePixel = 0
         Tab.LayoutOrder = CountTab
@@ -1065,7 +1103,7 @@ function StreeHub:Window(GuiConfig)
         FeatureImg.Size = UDim2.new(0, 16, 0, 16)
         FeatureImg.Name = "FeatureImg"
         FeatureImg.Parent = Tab
-        
+
         if CountTab == 0 then
             LayersPageLayout:JumpToIndex(0)
             NameTab.Text = TabConfig.Name
@@ -1104,28 +1142,38 @@ function StreeHub:Window(GuiConfig)
                     end
                 end
             end
-            
+
             if FrameChoose ~= nil and Tab.LayoutOrder ~= LayersPageLayout.CurrentPage.LayoutOrder then
                 for _, TabFrame in ScrollTab:GetChildren() do
                     if TabFrame.Name == "Tab" then
-                        TweenService:Create(TabFrame, TweenInfo.new(0.3, Enum.EasingStyle.Back, Enum.EasingDirection.InOut), { BackgroundTransparency = 0.9990000128746033 }):Play()
+                        TweenService:Create(TabFrame, TweenInfo.new(0.3, Enum.EasingStyle.Back, Enum.EasingDirection.InOut), {
+                            BackgroundTransparency = 0.9990000128746033
+                        }):Play()
                     end
                 end
-                
-                TweenService:Create(Tab, TweenInfo.new(0.6, Enum.EasingStyle.Back, Enum.EasingDirection.InOut), { BackgroundTransparency = 0.9200000166893005 }):Play()
-                TweenService:Create(FrameChoose, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), { Position = UDim2.new(0, 2, 0, 9 + (33 * Tab.LayoutOrder)) }):Play()
+
+                TweenService:Create(Tab, TweenInfo.new(0.6, Enum.EasingStyle.Back, Enum.EasingDirection.InOut), {
+                    BackgroundTransparency = 0.9200000166893005
+                }):Play()
+                TweenService:Create(FrameChoose, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+                    Position = UDim2.new(0, 2, 0, 9 + (33 * Tab.LayoutOrder))
+                }):Play()
                 LayersPageLayout:JumpToIndex(Tab.LayoutOrder)
                 task.wait(0.05)
                 NameTab.Text = TabConfig.Name
-                TweenService:Create(FrameChoose, TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), { Size = UDim2.new(0, 1, 0, 20) }):Play()
+                TweenService:Create(FrameChoose, TweenInfo.new(0.35, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+                    Size = UDim2.new(0, 1, 0, 20)
+                }):Play()
                 task.wait(0.2)
-                TweenService:Create(FrameChoose, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), { Size = UDim2.new(0, 1, 0, 12) }):Play()
+                TweenService:Create(FrameChoose, TweenInfo.new(0.25, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut), {
+                    Size = UDim2.new(0, 1, 0, 12)
+                }):Play()
             end
         end)
-        
+
         local Sections = {}
         local CountSection = 0
-        
+
         function Sections:AddSection(Title, AlwaysOpen)
             local Title = Title or "Title"
             local Section = Instance.new("Frame")
@@ -1276,10 +1324,18 @@ function StreeHub:Window(GuiConfig)
                             SectionSizeYWitdh = SectionSizeYWitdh + v.Size.Y.Offset + 3
                         end
                     end
-                    TweenService:Create(FeatureFrame, TweenInfo.new(0.5), { Rotation = 90 }):Play()
-                    TweenService:Create(Section, TweenInfo.new(0.5), { Size = UDim2.new(1, 1, 0, SectionSizeYWitdh) }):Play()
-                    TweenService:Create(SectionAdd, TweenInfo.new(0.5), { Size = UDim2.new(1, 0, 0, SectionSizeYWitdh - 38) }):Play()
-                    TweenService:Create(SectionDecideFrame, TweenInfo.new(0.5), { Size = UDim2.new(1, 0, 0, 2) }):Play()
+                    TweenService:Create(FeatureFrame, TweenInfo.new(0.5), {
+                        Rotation = 90
+                    }):Play()
+                    TweenService:Create(Section, TweenInfo.new(0.5), {
+                        Size = UDim2.new(1, 1, 0, SectionSizeYWitdh)
+                    }):Play()
+                    TweenService:Create(SectionAdd, TweenInfo.new(0.5), {
+                        Size = UDim2.new(1, 0, 0, SectionSizeYWitdh - 38)
+                    }):Play()
+                    TweenService:Create(SectionDecideFrame, TweenInfo.new(0.5), {
+                        Size = UDim2.new(1, 0, 0, 2)
+                    }):Play()
                     task.wait(0.5)
                     UpdateSizeScroll()
                 end
@@ -1301,9 +1357,15 @@ function StreeHub:Window(GuiConfig)
                 SectionButton.Activated:Connect(function()
                     CircleClick(SectionButton, Mouse.X, Mouse.Y)
                     if OpenSection then
-                        TweenService:Create(FeatureFrame, TweenInfo.new(0.5), { Rotation = 0 }):Play()
-                        TweenService:Create(Section, TweenInfo.new(0.5), { Size = UDim2.new(1, 1, 0, 30) }):Play()
-                        TweenService:Create(SectionDecideFrame, TweenInfo.new(0.5), { Size = UDim2.new(0, 0, 0, 2) }):Play()
+                        TweenService:Create(FeatureFrame, TweenInfo.new(0.5), {
+                            Rotation = 0
+                        }):Play()
+                        TweenService:Create(Section, TweenInfo.new(0.5), {
+                            Size = UDim2.new(1, 1, 0, 30)
+                        }):Play()
+                        TweenService:Create(SectionDecideFrame, TweenInfo.new(0.5), {
+                            Size = UDim2.new(0, 0, 0, 2)
+                        }):Play()
                         OpenSection = false
                         task.wait(0.5)
                         UpdateSizeScroll()
@@ -1341,7 +1403,7 @@ function StreeHub:Window(GuiConfig)
 
             local Items = {}
             local CountItem = 0
-            
+
             function Items:AddParagraph(ParagraphConfig)
                 local ParagraphConfig = ParagraphConfig or {}
                 ParagraphConfig.Title = ParagraphConfig.Title or "Title"
@@ -1454,7 +1516,7 @@ function StreeHub:Window(GuiConfig)
                 CountItem = CountItem + 1
                 return ParagraphFunc
             end
-            
+
             function Items:AddPanel(PanelConfig)
                 PanelConfig = PanelConfig or {}
                 PanelConfig.Title = PanelConfig.Title or "Title"
@@ -1471,7 +1533,9 @@ function StreeHub:Window(GuiConfig)
                     PanelConfig.Default = ConfigData[configKey]
                 end
 
-                local PanelFunc = { Value = PanelConfig.Default }
+                local PanelFunc = {
+                    Value = PanelConfig.Default
+                }
 
                 local baseHeight = 50
                 if PanelConfig.Placeholder then
@@ -1610,7 +1674,7 @@ function StreeHub:Window(GuiConfig)
                 CountItem = CountItem + 1
                 return PanelFunc
             end
-            
+
             function Items:AddButton(ButtonConfig)
                 ButtonConfig = ButtonConfig or {}
                 ButtonConfig.Title = ButtonConfig.Title or "Confirm"
@@ -1669,7 +1733,7 @@ function StreeHub:Window(GuiConfig)
 
                 CountItem = CountItem + 1
             end
-            
+
             function Items:AddToggle(ToggleConfig)
                 local ToggleConfig = ToggleConfig or {}
                 ToggleConfig.Title = ToggleConfig.Title or "Title"
@@ -1683,7 +1747,9 @@ function StreeHub:Window(GuiConfig)
                     ToggleConfig.Default = ConfigData[configKey]
                 end
 
-                local ToggleFunc = { Value = ToggleConfig.Default }
+                local ToggleFunc = {
+                    Value = ToggleConfig.Default
+                }
 
                 local Toggle = Instance.new("Frame")
                 local UICorner20 = Instance.new("UICorner")
@@ -1814,20 +1880,42 @@ function StreeHub:Window(GuiConfig)
                         local ok, err = pcall(function()
                             ToggleConfig.Callback(Value)
                         end)
-                        if not ok then warn("Toggle Callback error:", err) end
+                        if not ok then
+                            warn("Toggle Callback error:", err)
+                        end
                     end
                     ConfigData[configKey] = Value
                     SaveConfig()
                     if Value then
-                        TweenService:Create(ToggleTitle, TweenInfo.new(0.2), { TextColor3 = GuiConfig.Color }):Play()
-                        TweenService:Create(ToggleCircle, TweenInfo.new(0.2), { Position = UDim2.new(0, 15, 0, 0) }):Play()
-                        TweenService:Create(UIStroke8, TweenInfo.new(0.2), { Color = GuiConfig.Color, Transparency = 0 }):Play()
-                        TweenService:Create(FeatureFrame2, TweenInfo.new(0.2), { BackgroundColor3 = GuiConfig.Color, BackgroundTransparency = 0 }):Play()
+                        TweenService:Create(ToggleTitle, TweenInfo.new(0.2), {
+                            TextColor3 = GuiConfig.Color
+                        }):Play()
+                        TweenService:Create(ToggleCircle, TweenInfo.new(0.2), {
+                            Position = UDim2.new(0, 15, 0, 0)
+                        }):Play()
+                        TweenService:Create(UIStroke8, TweenInfo.new(0.2), {
+                            Color = GuiConfig.Color,
+                            Transparency = 0
+                        }):Play()
+                        TweenService:Create(FeatureFrame2, TweenInfo.new(0.2), {
+                            BackgroundColor3 = GuiConfig.Color,
+                            BackgroundTransparency = 0
+                        }):Play()
                     else
-                        TweenService:Create(ToggleTitle, TweenInfo.new(0.2), { TextColor3 = Color3.fromRGB(230, 230, 230) }):Play()
-                        TweenService:Create(ToggleCircle, TweenInfo.new(0.2), { Position = UDim2.new(0, 0, 0, 0) }):Play()
-                        TweenService:Create(UIStroke8, TweenInfo.new(0.2), { Color = Color3.fromRGB(255, 255, 255), Transparency = 0.9 }):Play()
-                        TweenService:Create(FeatureFrame2, TweenInfo.new(0.2), { BackgroundColor3 = Color3.fromRGB(255, 255, 255), BackgroundTransparency = 0.92 }):Play()
+                        TweenService:Create(ToggleTitle, TweenInfo.new(0.2), {
+                            TextColor3 = Color3.fromRGB(230, 230, 230)
+                        }):Play()
+                        TweenService:Create(ToggleCircle, TweenInfo.new(0.2), {
+                            Position = UDim2.new(0, 0, 0, 0)
+                        }):Play()
+                        TweenService:Create(UIStroke8, TweenInfo.new(0.2), {
+                            Color = Color3.fromRGB(255, 255, 255),
+                            Transparency = 0.9
+                        }):Play()
+                        TweenService:Create(FeatureFrame2, TweenInfo.new(0.2), {
+                            BackgroundColor3 = Color3.fromRGB(255, 255, 255),
+                            BackgroundTransparency = 0.92
+                        }):Play()
                     end
                 end
 
@@ -1836,7 +1924,7 @@ function StreeHub:Window(GuiConfig)
                 Elements[configKey] = ToggleFunc
                 return ToggleFunc
             end
-            
+
             function Items:AddSlider(SliderConfig)
                 local SliderConfig = SliderConfig or {}
                 SliderConfig.Title = SliderConfig.Title or "Slider"
@@ -1852,7 +1940,9 @@ function StreeHub:Window(GuiConfig)
                     SliderConfig.Default = ConfigData[configKey]
                 end
 
-                local SliderFunc = { Value = SliderConfig.Default }
+                local SliderFunc = {
+                    Value = SliderConfig.Default
+                }
 
                 local Slider = Instance.new("Frame")
                 local UICorner15 = Instance.new("UICorner")
@@ -1990,6 +2080,7 @@ function StreeHub:Window(GuiConfig)
                 UIStroke6.Parent = SliderCircle
 
                 local Dragging = false
+
                 local function Round(Number, Factor)
                     local Result = math.floor(Number / Factor + (math.sign(Number) * 0.5)) * Factor
                     if Result < 0 then
@@ -1997,12 +2088,14 @@ function StreeHub:Window(GuiConfig)
                     end
                     return Result
                 end
-                
+
                 function SliderFunc:Set(Value)
                     Value = math.clamp(Round(Value, SliderConfig.Increment), SliderConfig.Min, SliderConfig.Max)
                     SliderFunc.Value = Value
                     TextBox.Text = tostring(Value)
-                    TweenService:Create(SliderDraggable, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.fromScale((Value - SliderConfig.Min) / (SliderConfig.Max - SliderConfig.Min), 1) }):Play()
+                    TweenService:Create(SliderDraggable, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+                        Size = UDim2.fromScale((Value - SliderConfig.Min) / (SliderConfig.Max - SliderConfig.Min), 1)
+                    }):Play()
 
                     SliderConfig.Callback(Value)
                     ConfigData[configKey] = Value
@@ -2012,7 +2105,9 @@ function StreeHub:Window(GuiConfig)
                 SliderFrame.InputBegan:Connect(function(Input)
                     if Input.UserInputType == Enum.UserInputType.MouseButton1 or Input.UserInputType == Enum.UserInputType.Touch then
                         Dragging = true
-                        TweenService:Create(SliderCircle, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(0, 14, 0, 14) }):Play()
+                        TweenService:Create(SliderCircle, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+                            Size = UDim2.new(0, 14, 0, 14)
+                        }):Play()
                         local SizeScale = math.clamp((Input.Position.X - SliderFrame.AbsolutePosition.X) / SliderFrame.AbsoluteSize.X, 0, 1)
                         SliderFunc:Set(SliderConfig.Min + ((SliderConfig.Max - SliderConfig.Min) * SizeScale))
                     end
@@ -2022,7 +2117,9 @@ function StreeHub:Window(GuiConfig)
                     if Input.UserInputType == Enum.UserInputType.MouseButton1 or Input.UserInputType == Enum.UserInputType.Touch then
                         Dragging = false
                         SliderConfig.Callback(SliderFunc.Value)
-                        TweenService:Create(SliderCircle, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), { Size = UDim2.new(0, 8, 0, 8) }):Play()
+                        TweenService:Create(SliderCircle, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+                            Size = UDim2.new(0, 8, 0, 8)
+                        }):Play()
                     end
                 end)
 
@@ -2042,13 +2139,13 @@ function StreeHub:Window(GuiConfig)
                         SliderFunc:Set(SliderConfig.Min)
                     end
                 end)
-                
+
                 SliderFunc:Set(SliderConfig.Default)
                 CountItem = CountItem + 1
                 Elements[configKey] = SliderFunc
                 return SliderFunc
             end
-            
+
             function Items:AddInput(InputConfig)
                 local InputConfig = InputConfig or {}
                 InputConfig.Title = InputConfig.Title or "Title"
@@ -2061,7 +2158,9 @@ function StreeHub:Window(GuiConfig)
                     InputConfig.Default = ConfigData[configKey]
                 end
 
-                local InputFunc = { Value = InputConfig.Default }
+                local InputFunc = {
+                    Value = InputConfig.Default
+                }
 
                 local Input = Instance.new("Frame")
                 local UICorner12 = Instance.new("UICorner")
@@ -2158,7 +2257,7 @@ function StreeHub:Window(GuiConfig)
                 InputTextBox.Size = UDim2.new(1, -10, 1, -8)
                 InputTextBox.Name = "InputTextBox"
                 InputTextBox.Parent = InputFrame
-                
+
                 function InputFunc:Set(Value)
                     InputTextBox.Text = Value
                     InputFunc.Value = Value
@@ -2172,12 +2271,12 @@ function StreeHub:Window(GuiConfig)
                 InputTextBox.FocusLost:Connect(function()
                     InputFunc:Set(InputTextBox.Text)
                 end)
-                
+
                 CountItem = CountItem + 1
                 Elements[configKey] = InputFunc
                 return InputFunc
             end
-            
+
             function Items:AddDropdown(DropdownConfig)
                 local DropdownConfig = DropdownConfig or {}
                 DropdownConfig.Title = DropdownConfig.Title or "Title"
@@ -2192,7 +2291,10 @@ function StreeHub:Window(GuiConfig)
                     DropdownConfig.Default = ConfigData[configKey]
                 end
 
-                local DropdownFunc = { Value = DropdownConfig.Default, Options = DropdownConfig.Options }
+                local DropdownFunc = {
+                    Value = DropdownConfig.Default,
+                    Options = DropdownConfig.Options
+                }
 
                 local Dropdown = Instance.new("Frame")
                 local DropdownButton = Instance.new("TextButton")
@@ -2260,8 +2362,12 @@ function StreeHub:Window(GuiConfig)
                     if not MoreBlur.Visible then
                         MoreBlur.Visible = true
                         DropPageLayout:JumpToIndex(SelectOptionsFrame.LayoutOrder)
-                        TweenService:Create(MoreBlur, TweenInfo.new(0.3), { BackgroundTransparency = 1 }):Play()
-                        TweenService:Create(DropdownSelect, TweenInfo.new(0.3), { Position = UDim2.new(1, -11, 0.5, 0) }):Play()
+                        TweenService:Create(MoreBlur, TweenInfo.new(0.3), {
+                            BackgroundTransparency = 1
+                        }):Play()
+                        TweenService:Create(DropdownSelect, TweenInfo.new(0.3), {
+                            Position = UDim2.new(1, -11, 0.5, 0)
+                        }):Play()
                     end
                 end)
 
@@ -2446,14 +2552,26 @@ function StreeHub:Window(GuiConfig)
                             local selected = DropdownConfig.Multi and table.find(DropdownFunc.Value, v) or DropdownFunc.Value == v
 
                             if selected then
-                                TweenService:Create(Drop.ChooseFrame, TweenInfo.new(0.2), { Size = UDim2.new(0, 1, 0, 12) }):Play()
-                                TweenService:Create(Drop.ChooseFrame.UIStroke, TweenInfo.new(0.2), { Transparency = 0 }):Play()
-                                TweenService:Create(Drop, TweenInfo.new(0.2), { BackgroundTransparency = 0.935 }):Play()
+                                TweenService:Create(Drop.ChooseFrame, TweenInfo.new(0.2), {
+                                    Size = UDim2.new(0, 1, 0, 12)
+                                }):Play()
+                                TweenService:Create(Drop.ChooseFrame.UIStroke, TweenInfo.new(0.2), {
+                                    Transparency = 0
+                                }):Play()
+                                TweenService:Create(Drop, TweenInfo.new(0.2), {
+                                    BackgroundTransparency = 0.935
+                                }):Play()
                                 table.insert(texts, Drop.OptionText.Text)
                             else
-                                TweenService:Create(Drop.ChooseFrame, TweenInfo.new(0.1), { Size = UDim2.new(0, 0, 0, 0) }):Play()
-                                TweenService:Create(Drop.ChooseFrame.UIStroke, TweenInfo.new(0.1), { Transparency = 0.999 }):Play()
-                                TweenService:Create(Drop, TweenInfo.new(0.1), { BackgroundTransparency = 0.999 }):Play()
+                                TweenService:Create(Drop.ChooseFrame, TweenInfo.new(0.1), {
+                                    Size = UDim2.new(0, 0, 0, 0)
+                                }):Play()
+                                TweenService:Create(Drop.ChooseFrame.UIStroke, TweenInfo.new(0.1), {
+                                    Transparency = 0.999
+                                }):Play()
+                                TweenService:Create(Drop, TweenInfo.new(0.1), {
+                                    BackgroundTransparency = 0.999
+                                }):Play()
                             end
                         end
                     end
@@ -2496,7 +2614,7 @@ function StreeHub:Window(GuiConfig)
                 Elements[configKey] = DropdownFunc
                 return DropdownFunc
             end
-            
+
             function Items:AddDivider()
                 local Divider = Instance.new("Frame")
                 Divider.Name = "Divider"
@@ -2524,7 +2642,7 @@ function StreeHub:Window(GuiConfig)
                 CountItem = CountItem + 1
                 return Divider
             end
-            
+
             function Items:AddSubSection(title)
                 title = title or "Sub Section"
 
@@ -2606,11 +2724,15 @@ function StreeHub:Window(GuiConfig)
     end)
 
     Button.MouseEnter:Connect(function()
-        TweenService:Create(Scale, TweenInfo.new(0.1), { Scale = 1.2 }):Play()
+        TweenService:Create(Scale, TweenInfo.new(0.1), {
+            Scale = 1.2
+        }):Play()
     end)
 
     Button.MouseLeave:Connect(function()
-        TweenService:Create(Scale, TweenInfo.new(0.1), { Scale = 1 }):Play()
+        TweenService:Create(Scale, TweenInfo.new(0.1), {
+            Scale = 1
+        }):Play()
     end)
 
     function GuiFunc:OnDestroy(callback)
@@ -2629,10 +2751,10 @@ function StreeHub:Window(GuiConfig)
     end
 
     LoadConfigElements()
-    
+
     return Tabs
 end
 
 LoadConfigElements()
 
-return StreeHu
+return StreeHub
