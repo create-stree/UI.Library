@@ -70,6 +70,7 @@ local Icons = {
     handshake = "rbxassetid://118812884427306",
     home      = "rbxassetid://135016593915894",
     idea      = "rbxassetid://16833255748",
+    info      = "rbxassetid://71870986260398",
     landmark  = "rbxassetid://139262888943265",
     loop      = "rbxassetid://122032243989747",
     map       = "rbxassetid://115690060447581",
