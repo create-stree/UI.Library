@@ -2582,7 +2582,7 @@ function StreeHub:Window(GuiConfig)
     Button.BackgroundTransparency = 1
     Button.Size = UDim2.new(0, 60, 0, 60)
     Button.Position = UDim2.new(0, 10, 0, 60)
-    Button.Image = 'rbxassetid://107819383763884'
+    Button.Image = 'rbxassetid://128806139932217'
     Button.Draggable = true
 
     Corner.CornerRadius = UDim.new(0, 16)
