@@ -53,6 +53,7 @@ function LoadConfigElements()
 end
 
 local Icons = {
+local Icons = {
     alert     = "rbxassetid://73186275216515",
     bag       = "rbxassetid://8601111810",
     boss      = "rbxassetid://13132186360",
@@ -763,7 +764,7 @@ function StreeHub:Window(GuiConfig)
         local Dialog = Instance.new("ImageLabel")
         Dialog.Size = UDim2.new(0, 300, 0, 150)
         Dialog.Position = UDim2.new(0.5, -150, 0.5, -75)
-        Dialog.Image = "rbxassetid://9542022979"
+        Dialog.Image = "rbxassetid://122376116281975"
         Dialog.ImageTransparency = 0
         Dialog.BorderSizePixel = 0
         Dialog.ZIndex = 51
