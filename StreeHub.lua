@@ -53,7 +53,6 @@ function LoadConfigElements()
 end
 
 local Icons = {
-local Icons = {
     alert     = "rbxassetid://73186275216515",
     bag       = "rbxassetid://8601111810",
     boss      = "rbxassetid://13132186360",
